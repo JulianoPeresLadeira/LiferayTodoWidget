@@ -74,7 +74,7 @@
 			</div>
 			<div class="row">
 				<form class="mx-auto my-4">
-					<input type="button" class="btn btn-primary" value="Add Todo" id="loader"/>
+					<input type="button" class="btn btn-primary" value="Add new" id="loader"/>
 				</form>
 			</div>
 		</div>
@@ -104,7 +104,7 @@
 		                <input type="text" class="datepicker form-control" name="<portlet:namespace/>date" id="<portlet:namespace/>date">					
 					</div>
 					<div class="row my-4 d-flex flex-row-reverse">
-						<input class="btn btn-primary mx-2" type="submit" value="Submit" name="addTodo" id="addTodo"/>
+						<input class="btn btn-primary mx-2" type="submit" value="Confirm" name="addTodo" id="addTodo"/>
 						<input class="btn btn-link text-danger" type="button" value="Cancel" name="cancel" id="cancelNewTodo"/>						
 					</div>
 				</div>
