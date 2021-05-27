@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.todoservices">
+	<namespace>Todo</namespace>
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
+    <entity name="Todo" local-service="true" remote-service="false">
+        <column name="id" primary="true" type="long"></column>
+        <column name="name" type="String"></column>
+        <column name="done" type="boolean"></column>
+        <column name="dueDate" type="Date"></column>
+        <column name="user" type="long"></column>
+        
+        <finder name="user" return-type="Collection">
+            <finder-column name="user"></finder-column>
+        </finder>
+    </entity>
+</service-builder>

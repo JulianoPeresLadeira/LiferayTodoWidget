@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.todoservices.model.Todo">
+		<field name="id" type="long" />
+		<field name="name" type="String" />
+		<field name="done" type="boolean" />
+		<field name="dueDate" type="Date" />
+		<field name="user" type="long" />
+	</model>
+</model-hints>

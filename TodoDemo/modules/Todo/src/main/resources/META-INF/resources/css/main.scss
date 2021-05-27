@@ -1,0 +1,35 @@
+.Todo {
+}
+
+.hidden {
+    display: none;
+}
+
+.todo-done {
+    text-decoration: line-through;
+}
+
+span.Zebra_DatePicker_Icon_Wrapper {
+    display: block !important;
+    width: 100% !important;
+    position: relative !important;
+}
+
+.ui-dialog .ui-dialog-title {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.ui-widget-overlay {
+    opacity: .30;
+}
+
+.ui-dialog-titlebar-close {
+    display: none
+}
+
+.right-aligned-button {
+    position: relative;
+    right: 0;
+}
