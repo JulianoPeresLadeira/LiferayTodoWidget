@@ -83,7 +83,7 @@
 </div>
 
 
-<div id="resultreturn" class="hidden">
+<div id="newTodoModal" class="hidden">
 	<portlet:actionURL var="addTodoActionURL" windowState="normal" name="addTodo">
 	</portlet:actionURL>
 				
@@ -118,7 +118,7 @@
 $(document).ready(
 	function() {
 	    $("#loader").click(function(){
-			$("#resultreturn").dialog(
+			$("#newTodoModal").dialog(
         		{ 
         			title: 'New Todo',
         			modal: true,
@@ -133,17 +133,14 @@ $(document).ready(
 	    });
 	    $(".datepicker").Zebra_DatePicker({
 	    	format: "m/d/Y",
-	    	default_position: 'above',
 	        direction: 1
 	    });
 	}
 );
 
 function closeDialog() {
-	console.log('closing dialog');
-	if ($('#resultreturn').dialog('isOpen')) {
-		$("#resultreturn").dialog('close');
-		console.log('closed dialog');
+	if ($('#newTodoModal').dialog('isOpen')) {
+		$("#newTodoModal").dialog('close');
 	}
 }
 </script>
