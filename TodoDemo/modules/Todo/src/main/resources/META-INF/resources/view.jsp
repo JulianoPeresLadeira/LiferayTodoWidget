@@ -21,6 +21,62 @@
  <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <portlet:defineObjects />
 
+<script>
+$(document).ready(
+	function() {
+	    $("#loader").click(function(){
+			$("#newTodoModal").dialog(
+        		{ 
+        			title: 'New Todo',
+        			modal: true,
+        			height: window.screen.height * 0.4,
+        			width: window.screen.width * 0.5
+       			}
+       		);
+	    });
+
+	    $("#cancelNewTodo").click(function (){
+	    	closeDialog();
+	    });
+	    $(".datepicker").Zebra_DatePicker({
+	    	format: "m/d/Y",
+	        direction: 1
+	    });
+	    
+	    styleTodoEntries();
+	}
+);
+
+function closeDialog() {
+	if ($('#newTodoModal').dialog('isOpen')) {
+		$("#newTodoModal").dialog('close');
+	}
+}
+
+function styleTodoEntries() {
+	$('.todo-entry')
+		.each(function () {
+			if ($(this).attr("done") == "true") {
+				$(this).find(".todo-task").addClass("todo-done");
+				return;
+			}
+			
+			var dueDate = $(this).attr("duedate");
+			
+			if(dueDate != "null") {
+				var date = new Date(dueDate);
+				var now = new Date();
+				
+				if (date < now) {
+					$(this).find(".todo-task").addClass("text-danger");
+					$(this).find(".todo-duedate").addClass("text-danger");
+				}
+			}
+		} );
+}
+</script>
+
+
 <div class="container">
 	<div class=row>
 		<div class="col-3"></div>
@@ -44,7 +100,7 @@
 						<% for (Todo todo : userTodos) { 
 							DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
 						%>
-							<tr>
+							<tr class="todo-entry" task="<%= todo.getName() %>" done="<%= todo.getDone() %>" dueDate="<%= todo.getDueDate() %>">
 								<td>
 									<div align="center">
 										<% if (todo.getDone()) { %>
@@ -58,8 +114,8 @@
 										<% } %>
 									</div>
 								</td> 
-								<td class="<%= todo.getDone() ? "todo-done" : "" %>"><%= todo.getName() %></td>
-								<td><%= todo.getDueDate() == null ? "" : dateFormat.format(todo.getDueDate()) %></td>
+								<td class="todo-task"><%= todo.getName() %></td>
+								<td class="todo-duedate"><%= todo.getDueDate() == null ? "" : dateFormat.format(todo.getDueDate()) %></td>
 								<td>
 									<portlet:actionURL name="delete" var="deleteURL">
 										<portlet:param name="todo" value = "<%= String.valueOf(todo.getId()) %>"/>
@@ -113,35 +169,3 @@
 		</div>
 	</form>	
 </div>
-
-<script>
-$(document).ready(
-	function() {
-	    $("#loader").click(function(){
-			$("#newTodoModal").dialog(
-        		{ 
-        			title: 'New Todo',
-        			modal: true,
-        			height: window.screen.height * 0.4,
-        			width: window.screen.width * 0.5
-       			}
-       		);
-	    });
-
-	    $("#cancelNewTodo").click(function (){
-	    	closeDialog();
-	    });
-	    $(".datepicker").Zebra_DatePicker({
-	    	format: "m/d/Y",
-	        direction: 1
-	    });
-	}
-);
-
-function closeDialog() {
-	if ($('#newTodoModal').dialog('isOpen')) {
-		$("#newTodoModal").dialog('close');
-	}
-}
-</script>
-
