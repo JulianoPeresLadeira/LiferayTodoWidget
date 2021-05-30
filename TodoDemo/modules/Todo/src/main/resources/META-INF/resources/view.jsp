@@ -3,6 +3,7 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="com.todoservices.model.Todo"%>
+
 <%@ include file="/init.jsp" %>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -78,64 +79,68 @@ function styleTodoEntries() {
 
 
 <div class="container">
-	<div class=row>
-		<div class="col-3"></div>
-		<div class="col-6">
-			<div class="row">
-				<% if (userTodos != null) { %>
-					<table class = 'table'>
-						<thead>
-							<tr>
-								<th scope="col">
-									<div align="center">
-										Done
-									</div>
-								</th>			
-								<th scope="col">Task</th>
-								<th scope="col">Due Date</th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
-						<tbody>
-						<% for (Todo todo : userTodos) { 
-							DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
-						%>
-							<tr class="todo-entry" task="<%= todo.getName() %>" done="<%= todo.getDone() %>" dueDate="<%= todo.getDueDate() %>">
-								<td>
-									<div align="center">
-										<% if (todo.getDone()) { %>
-											<i class="fas fa-check"></i>
-										<% } else { %>
-											<portlet:actionURL name="markAsDone" var="markAsDoneURL">
-												<portlet:param name="todo" value = "<%= String.valueOf(todo.getId()) %>"/>
-											</portlet:actionURL>
-										
-											<a class="far fa-check-square" href="<%= markAsDoneURL.toString() %>"/>							
-										<% } %>
-									</div>
-								</td> 
-								<td class="todo-task"><%= todo.getName() %></td>
-								<td class="todo-duedate"><%= todo.getDueDate() == null ? "" : dateFormat.format(todo.getDueDate()) %></td>
-								<td>
-									<portlet:actionURL name="delete" var="deleteURL">
-										<portlet:param name="todo" value = "<%= String.valueOf(todo.getId()) %>"/>
-									</portlet:actionURL>
-									<a class="fas fa-trash-alt" href="<%= deleteURL.toString() %>"/>
-								</td>
-						    </tr>	
-				  		<% }  %>
-				  		</tbody>
-					</table>
-				<% } %>
+	<% if (!themeDisplay.isSignedIn()){ %>
+		<p class="centered-text">Please sign in to create and view todos</p>
+	<% } else { %>
+		<div class=row>
+			<div class="col-3"></div>
+			<div class="col-6">
+				<div class="row">
+					<% if (userTodos != null) { %>
+						<table class = 'table'>
+							<thead>
+								<tr>
+									<th scope="col">
+										<div align="center">
+											Done
+										</div>
+									</th>			
+									<th scope="col">Task</th>
+									<th scope="col">Due Date</th>
+									<th scope="col"></th>
+								</tr>
+							</thead>
+							<tbody>
+							<% for (Todo todo : userTodos) { 
+								DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+							%>
+								<tr class="todo-entry" task="<%= todo.getName() %>" done="<%= todo.getDone() %>" dueDate="<%= todo.getDueDate() %>">
+									<td>
+										<div align="center">
+											<% if (todo.getDone()) { %>
+												<i class="fas fa-check"></i>
+											<% } else { %>
+												<portlet:actionURL name="markAsDone" var="markAsDoneURL">
+													<portlet:param name="todo" value = "<%= String.valueOf(todo.getId()) %>"/>
+												</portlet:actionURL>
+											
+												<a class="far fa-check-square" href="<%= markAsDoneURL.toString() %>"/>							
+											<% } %>
+										</div>
+									</td> 
+									<td class="todo-task"><%= todo.getName() %></td>
+									<td class="todo-duedate"><%= todo.getDueDate() == null ? "" : dateFormat.format(todo.getDueDate()) %></td>
+									<td>
+										<portlet:actionURL name="delete" var="deleteURL">
+											<portlet:param name="todo" value = "<%= String.valueOf(todo.getId()) %>"/>
+										</portlet:actionURL>
+										<a class="fas fa-trash-alt" href="<%= deleteURL.toString() %>"/>
+									</td>
+							    </tr>	
+					  		<% }  %>
+					  		</tbody>
+						</table>
+					<% } %>
+				</div>
+				<div class="row">
+					<form class="mx-auto my-4">
+						<input type="button" class="btn btn-primary" value="Add new" id="loader"/>
+					</form>
+				</div>
 			</div>
-			<div class="row">
-				<form class="mx-auto my-4">
-					<input type="button" class="btn btn-primary" value="Add new" id="loader"/>
-				</form>
-			</div>
+			<div class="col-3"></div>
 		</div>
-		<div class="col-3"></div>
-	</div>
+	<% }%>	
 </div>
 
 
