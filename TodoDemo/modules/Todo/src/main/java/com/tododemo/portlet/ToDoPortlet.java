@@ -99,8 +99,13 @@ public class ToDoPortlet extends MVCPortlet {
 		try {
 			Long todoCode = ParamUtil.getLong(actionRequest, "todo");
 			
-			deleteTodo(todoCode);
-		    actionResponse.sendRedirect(this.getRequestAddress(actionRequest));
+			User user = getUserFromRequest(actionRequest);
+			Todo todo = todoLocalService.getTodo(todoCode);
+			
+			if (todo.getUser() == user.getUserId()) {
+				deleteTodo(todoCode);
+				actionResponse.sendRedirect(this.getRequestAddress(actionRequest));				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,6 +133,10 @@ public class ToDoPortlet extends MVCPortlet {
 	
 	private void deleteTodo(long todoCode) throws PortalException {
 		todoLocalService.deleteTodo(todoCode);
+	}
+	
+	private User getUserFromRequest(ActionRequest actionRequest) {
+		return (User) actionRequest.getAttribute(WebKeys.USER);
 	}
 }
 
